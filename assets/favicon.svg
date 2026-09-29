@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="favBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e2230"/>
+      <stop offset="100%" stop-color="#0a0c12"/>
+    </linearGradient>
+    <linearGradient id="favOrange" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff9f0a"/>
+      <stop offset="100%" stop-color="#e06c00"/>
+    </linearGradient>
+  </defs>
+  <!-- Background Tile -->
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="url(#favBg)" stroke="#3a3f52" stroke-width="1.5"/>
+  <!-- Lock Loop -->
+  <path d="M 23 27 V 20 C 23 15 27 11 32 11 C 37 11 41 15 41 20 V 27" fill="none" stroke="#e1e4ed" stroke-width="4.5" stroke-linecap="round"/>
+  <!-- Vault / Calculator Body -->
+  <rect x="15" y="25" width="34" height="29" rx="5" fill="#252936" stroke="#4a5066" stroke-width="1"/>
+  <!-- Buttons -->
+  <rect x="18" y="28" width="12" height="10" rx="2" fill="#383e52"/>
+  <rect x="34" y="28" width="12" height="10" rx="2" fill="#383e52"/>
+  <rect x="18" y="41" width="12" height="10" rx="2" fill="#383e52"/>
+  <!-- Glowing '=' Button -->
+  <rect x="34" y="41" width="12" height="10" rx="2" fill="url(#favOrange)"/>
+  <line x1="37" y1="44.5" x2="43" y2="44.5" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="37" y1="47.5" x2="43" y2="47.5" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,242 @@
+:root {
+  /* System mode detection enabled */
+  color-scheme: light dark;
+
+  /* Font Families */
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "SF Mono", "JetBrains Mono", Menlo, Consolas, Monaco, monospace;
+
+  /* Transitions & Radii */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-full: 9999px;
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Safe Area Insets for Mobile/Notch Devices */
+  --sat: env(safe-area-inset-top, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+}
+
+/* Light theme */
+:root,
+:root[data-theme="light"] {
+  --bg-app: #f2f3f7;
+  --bg-app-rgb: 242, 243, 247;
+  --bg-surface: #ffffff;
+  --bg-surface-elevated: #ffffff;
+  --bg-surface-subtle: #f8fafc;
+  --bg-surface-hover: #f1f4f9;
+  --bg-surface-active: #e2e8f0;
+
+  /* Glassmorphism */
+  --glass-bg: rgba(255, 255, 255, 0.82);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+
+  /* Typography */
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-tertiary: #94a3b8;
+  --text-inverse: #ffffff;
+
+  /* Borders & Dividers */
+  --border-light: rgba(0, 0, 0, 0.06);
+  --border-medium: rgba(0, 0, 0, 0.12);
+  --border-strong: rgba(0, 0, 0, 0.2);
+  --border-focus: #007aff;
+
+  /* Accent Colors */
+  --accent-primary: #007aff;
+  --accent-primary-hover: #0066d6;
+  --accent-primary-subtle: rgba(0, 122, 255, 0.1);
+  --accent-orange: #ff9500;
+  --accent-orange-hover: #e08500;
+  --accent-orange-subtle: rgba(255, 149, 0, 0.12);
+  --accent-green: #34c759;
+  --accent-green-hover: #2db34e;
+  --accent-green-subtle: rgba(52, 199, 89, 0.12);
+  --accent-danger: #ff3b30;
+  --accent-danger-hover: #d62d24;
+  --accent-danger-subtle: rgba(255, 59, 48, 0.1);
+  --accent-red: var(--accent-danger);
+  --accent-red-hover: var(--accent-danger-hover);
+  --accent-red-subtle: var(--accent-danger-subtle);
+  --accent-purple: #af52de;
+  --accent-purple-subtle: rgba(175, 82, 222, 0.12);
+
+  /* Calculator Specific Colors (iOS Light inspired) */
+  --calc-body-bg: #f9f9fb;
+  --calc-display-bg: #ffffff;
+  --calc-btn-num-bg: #ffffff;
+  --calc-btn-num-hover: #f1f3f7;
+  --calc-btn-num-active: #e2e6ee;
+  --calc-btn-num-text: #111827;
+  --calc-btn-fn-bg: #e2e8f0;
+  --calc-btn-fn-hover: #cbd5e1;
+  --calc-btn-fn-active: #94a3b8;
+  --calc-btn-fn-text: #0f172a;
+  --calc-btn-op-bg: #ff9500;
+  --calc-btn-op-hover: #f08c00;
+  --calc-btn-op-active-state-bg: #ffffff;
+  --calc-btn-op-active-state-text: #ff9500;
+  --calc-btn-op-text: #ffffff;
+  --calc-btn-sci-bg: #f1f5f9;
+  --calc-btn-sci-text: #334155;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.08);
+  --shadow-key: 0 2px 4px rgba(0, 0, 0, 0.06), 0 1px 1px rgba(0, 0, 0, 0.04);
+}
+
+/* Dark theme */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg-app: #000000;
+    --bg-app-rgb: 0, 0, 0;
+    --bg-surface: #15161b;
+    --bg-surface-elevated: #1e2029;
+    --bg-surface-subtle: #191b22;
+    --bg-surface-hover: #262936;
+    --bg-surface-active: #313547;
+
+    /* Glassmorphism */
+    --glass-bg: rgba(21, 22, 27, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+
+    /* Typography */
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-tertiary: #64748b;
+    --text-inverse: #0f172a;
+
+    /* Borders & Dividers */
+    --border-light: rgba(255, 255, 255, 0.08);
+    --border-medium: rgba(255, 255, 255, 0.14);
+    --border-strong: rgba(255, 255, 255, 0.22);
+    --border-focus: #0a84ff;
+
+    /* Accent Colors */
+    --accent-primary: #0a84ff;
+    --accent-primary-hover: #409cff;
+    --accent-primary-subtle: rgba(10, 132, 255, 0.16);
+    --accent-orange: #ff9f0a;
+    --accent-orange-hover: #ffb340;
+    --accent-orange-subtle: rgba(255, 159, 10, 0.16);
+    --accent-green: #30d158;
+    --accent-green-hover: #4de071;
+    --accent-green-subtle: rgba(48, 209, 88, 0.16);
+    --accent-danger: #ff453a;
+    --accent-danger-hover: #ff6961;
+    --accent-danger-subtle: rgba(255, 69, 58, 0.18);
+    --accent-red: var(--accent-danger);
+    --accent-red-hover: var(--accent-danger-hover);
+    --accent-red-subtle: var(--accent-danger-subtle);
+    --accent-purple: #bf5af2;
+    --accent-purple-subtle: rgba(191, 90, 242, 0.16);
+
+    /* Calculator Specific Colors (iOS Dark / OLED Black) */
+    --calc-body-bg: #000000;
+    --calc-display-bg: #000000;
+    --calc-btn-num-bg: #333333;
+    --calc-btn-num-hover: #444444;
+    --calc-btn-num-active: #555555;
+    --calc-btn-num-text: #ffffff;
+    --calc-btn-fn-bg: #a5a5a5;
+    --calc-btn-fn-hover: #bebebe;
+    --calc-btn-fn-active: #d6d6d6;
+    --calc-btn-fn-text: #000000;
+    --calc-btn-op-bg: #ff9f0a;
+    --calc-btn-op-hover: #ffb340;
+    --calc-btn-op-active-state-bg: #ffffff;
+    --calc-btn-op-active-state-text: #ff9f0a;
+    --calc-btn-op-text: #ffffff;
+    --calc-btn-sci-bg: #212228;
+    --calc-btn-sci-text: #e2e8f0;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.6);
+    --shadow-lg: 0 14px 36px rgba(0, 0, 0, 0.75);
+    --shadow-key: 0 2px 5px rgba(0, 0, 0, 0.5);
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg-app: #000000;
+  --bg-app-rgb: 0, 0, 0;
+  --bg-surface: #15161b;
+  --bg-surface-elevated: #1e2029;
+  --bg-surface-subtle: #191b22;
+  --bg-surface-hover: #262936;
+  --bg-surface-active: #313547;
+
+  /* Glassmorphism */
+  --glass-bg: rgba(21, 22, 27, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+
+  /* Typography */
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-tertiary: #64748b;
+  --text-inverse: #0f172a;
+
+  /* Borders & Dividers */
+  --border-light: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.14);
+  --border-strong: rgba(255, 255, 255, 0.22);
+  --border-focus: #0a84ff;
+
+  /* Accent Colors */
+  --accent-primary: #0a84ff;
+  --accent-primary-hover: #409cff;
+  --accent-primary-subtle: rgba(10, 132, 255, 0.16);
+  --accent-orange: #ff9f0a;
+  --accent-orange-hover: #ffb340;
+  --accent-orange-subtle: rgba(255, 159, 10, 0.16);
+  --accent-green: #30d158;
+  --accent-green-hover: #4de071;
+  --accent-green-subtle: rgba(48, 209, 88, 0.16);
+  --accent-danger: #ff453a;
+  --accent-danger-hover: #ff6961;
+  --accent-danger-subtle: rgba(255, 69, 58, 0.18);
+  --accent-red: var(--accent-danger);
+  --accent-red-hover: var(--accent-danger-hover);
+  --accent-red-subtle: var(--accent-danger-subtle);
+  --accent-purple: #bf5af2;
+  --accent-purple-subtle: rgba(191, 90, 242, 0.16);
+
+  /* Calculator Specific Colors (iOS Dark / OLED Black) */
+  --calc-body-bg: #000000;
+  --calc-display-bg: #000000;
+  --calc-btn-num-bg: #333333;
+  --calc-btn-num-hover: #444444;
+  --calc-btn-num-active: #555555;
+  --calc-btn-num-text: #ffffff;
+  --calc-btn-fn-bg: #a5a5a5;
+  --calc-btn-fn-hover: #bebebe;
+  --calc-btn-fn-active: #d6d6d6;
+  --calc-btn-fn-text: #000000;
+  --calc-btn-op-bg: #ff9f0a;
+  --calc-btn-op-hover: #ffb340;
+  --calc-btn-op-active-state-bg: #ffffff;
+  --calc-btn-op-active-state-text: #ff9f0a;
+  --calc-btn-op-text: #ffffff;
+  --calc-btn-sci-bg: #212228;
+  --calc-btn-sci-text: #e2e8f0;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 14px 36px rgba(0, 0, 0, 0.75);
+  --shadow-key: 0 2px 5px rgba(0, 0, 0, 0.5);
+}

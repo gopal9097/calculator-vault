@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#181a24"/>
+      <stop offset="50%" stop-color="#0e1017"/>
+      <stop offset="100%" stop-color="#07080b"/>
+    </linearGradient>
+
+    <!-- Metallic Shackle Gradient -->
+    <linearGradient id="shackleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8e95a5"/>
+      <stop offset="25%" stop-color="#f0f3fa"/>
+      <stop offset="50%" stop-color="#ffffff"/>
+      <stop offset="75%" stop-color="#cad0de"/>
+      <stop offset="100%" stop-color="#737987"/>
+    </linearGradient>
+
+    <!-- Calculator Body Gradient -->
+    <linearGradient id="vaultBodyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#262936"/>
+      <stop offset="100%" stop-color="#14161f"/>
+    </linearGradient>
+
+    <!-- Glowing Orange Accent Gradient for '=' Key -->
+    <linearGradient id="accentOrange" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff9f0a"/>
+      <stop offset="100%" stop-color="#e06c00"/>
+    </linearGradient>
+
+    <!-- Soft Neutral Button Gradient -->
+    <linearGradient id="keyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#343847"/>
+      <stop offset="100%" stop-color="#242733"/>
+    </linearGradient>
+
+    <!-- Drop Shadows & Glow -->
+    <filter id="keyGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#ff9f0a" flood-opacity="0.45"/>
+    </filter>
+    <filter id="vaultShadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <!-- Squircle Base App Icon Tile -->
+  <rect x="16" y="16" width="480" height="480" rx="108" fill="url(#bgGrad)" stroke="rgba(255,255,255,0.12)" stroke-width="3"/>
+  <rect x="18" y="18" width="476" height="476" rx="106" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+
+  <!-- Vault Shackle (The Lock Loop) -->
+  <path d="M 180 216 V 162 C 180 120 214 86 256 86 C 298 86 332 120 332 162 V 216"
+        fill="none"
+        stroke="url(#shackleGrad)"
+        stroke-width="30"
+        stroke-linecap="round"/>
+
+  <!-- Shackle Inner Cutout Shadow for Depth -->
+  <path d="M 180 216 V 162 C 180 120 214 86 256 86 C 298 86 332 120 332 162 V 216"
+        fill="none"
+        stroke="#000000"
+        stroke-width="12"
+        stroke-linecap="round"
+        opacity="0.25"/>
+
+  <!-- Vault & Calculator Main Chassis -->
+  <g filter="url(#vaultShadow)">
+    <rect x="116" y="196" width="280" height="236" rx="38" fill="url(#vaultBodyGrad)" stroke="rgba(255,255,255,0.14)" stroke-width="2"/>
+    <rect x="118" y="198" width="276" height="232" rx="36" fill="none" stroke="rgba(0,0,0,0.4)" stroke-width="2"/>
+  </g>
+
+  <!-- Keypad Matrix (2 x 2 Tactile Buttons) -->
+  <!-- Top Left Key: '+' -->
+  <g>
+    <rect x="144" y="224" width="98" height="84" rx="20" fill="url(#keyGrad)" stroke="rgba(255,255,255,0.08)" stroke-width="1.5"/>
+    <path d="M 193 250 V 282 M 177 266 H 209" stroke="#e1e4ed" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Top Right Key: '÷' -->
+  <g>
+    <rect x="270" y="224" width="98" height="84" rx="20" fill="url(#keyGrad)" stroke="rgba(255,255,255,0.08)" stroke-width="1.5"/>
+    <circle cx="319" cy="254" r="3.5" fill="#e1e4ed"/>
+    <line x1="303" y1="266" x2="335" y2="266" stroke="#e1e4ed" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="319" cy="278" r="3.5" fill="#e1e4ed"/>
+  </g>
+
+  <!-- Bottom Left Key: '×' -->
+  <g>
+    <rect x="144" y="324" width="98" height="84" rx="20" fill="url(#keyGrad)" stroke="rgba(255,255,255,0.08)" stroke-width="1.5"/>
+    <path d="M 182 355 L 204 377 M 204 355 L 182 377" stroke="#e1e4ed" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Bottom Right Key: Glowing '=' (The Vault Unlock Key) -->
+  <g filter="url(#keyGlow)">
+    <rect x="270" y="324" width="98" height="84" rx="20" fill="url(#accentOrange)" stroke="#ffb84d" stroke-width="1.5"/>
+    <path d="M 303 360 H 335 M 303 372 H 335" stroke="#ffffff" stroke-width="5.5" stroke-linecap="round"/>
+  </g>
+</svg>

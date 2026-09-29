@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="Clean modern calculator with private encrypted zero-knowledge vault">
+
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/logo.svg">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/calculator.css">
+  <link rel="stylesheet" href="css/vault.css">
+</head>
+<body>
+  <main id="app-root">
+
+    <!-- Calculator View -->
+    <section id="calc-view" class="calc-container hidden" aria-label="Calculator">
+      <!-- MacBook Mode Switcher (Basic, Scientific, Programmer, Convert, Geometry) -->
+      <div class="calc-mode-bar" id="calc-mode-bar" role="tablist">
+        <button class="calc-mode-btn active" data-mode="basic" type="button">Basic</button>
+        <button class="calc-mode-btn" data-mode="scientific" type="button">Scientific</button>
+        <button class="calc-mode-btn" data-mode="programmer" type="button">Programmer</button>
+        <button class="calc-mode-btn" data-mode="converter" type="button">Convert</button>
+        <button class="calc-mode-btn" data-mode="geometry" type="button">Geometry</button>
+      </div>
+
+      <!-- Top Utilities (DEG/RAD, Memory, History) -->
+      <div class="calc-top-bar">
+        <div style="display:flex;align-items:center;gap:6px;">
+          <button id="calc-deg-btn" class="calc-util-btn" type="button" title="Toggle Degree / Radian">DEG</button>
+          <span id="calc-mem-badge" class="calc-mem-badge hidden" title="Memory stored">M</span>
+        </div>
+        <div style="display:flex;gap:6px;">
+          <button id="calc-history-btn" class="calc-util-btn" type="button" title="View Calculation History">🕒 History</button>
+        </div>
+      </div>
+
+      <!-- Calculation Display -->
+      <div class="calc-display" id="calc-display">
+        <div id="calc-expr" class="calc-expr" aria-live="polite"></div>
+        <div id="calc-res" class="calc-result" aria-live="polite">0</div>
+      </div>
+
+      <!-- History Tape Drawer -->
+      <div id="calc-history-drawer" class="calc-history-drawer hidden">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:10px;border-bottom:1px solid var(--border-light);">
+          <span style="font-weight:600;font-size:15px;">History</span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <button id="calc-history-clear" class="calc-history-clear-btn" type="button" title="Clear all calculations">Clear</button>
+            <button id="calc-history-close" class="modal-close-btn" type="button" title="Close History">✕</button>
+          </div>
+        </div>
+        <div id="calc-history-list" class="calc-history-list"></div>
+      </div>
+
+      <!-- Split Body: Left side = Calculation tools / Right side = Numbers -->
+      <div class="calc-body-split" id="calc-body-split">
+
+        <!-- Left Wing: Tools (Hidden in Basic mode) -->
+        <div class="calc-left-wing hidden" id="calc-left-wing">
+
+          <!-- 1. Scientific Functions Keypad -->
+          <div id="calc-sci-grid" class="calc-sci-grid hidden" aria-label="Scientific Functions">
+            <!-- Row 1: Memory & Secondary -->
+            <button class="calc-btn-sci" id="calc-2nd-btn" type="button">2ⁿᵈ</button>
+            <button class="calc-btn-sci" data-mem="mc" type="button">mc</button>
+            <button class="calc-btn-sci" data-mem="m+" type="button">m+</button>
+            <button class="calc-btn-sci" data-mem="m-" type="button">m−</button>
+            <button class="calc-btn-sci" data-mem="mr" type="button">mr</button>
+
+            <!-- Row 2: Trig -->
+            <button class="calc-btn-sci" data-key="sin" id="sci-btn-sin" type="button">sin</button>
+            <button class="calc-btn-sci" data-key="cos" id="sci-btn-cos" type="button">cos</button>
+            <button class="calc-btn-sci" data-key="tan" id="sci-btn-tan" type="button">tan</button>
+            <button class="calc-btn-sci" data-key="sinh" type="button">sinh</button>
+            <button class="calc-btn-sci" data-key="cosh" type="button">cosh</button>
+
+            <!-- Row 3: Logarithms & Exponents -->
+            <button class="calc-btn-sci" data-key="ln" id="sci-btn-ln" type="button">ln</button>
+            <button class="calc-btn-sci" data-key="log" id="sci-btn-log" type="button">log₁₀</button>
+            <button class="calc-btn-sci" data-key="e^" type="button">eˣ</button>
+            <button class="calc-btn-sci" data-key="10^" type="button">10ˣ</button>
+            <button class="calc-btn-sci" data-key="tanh" type="button">tanh</button>
+
+            <!-- Row 4: Powers, Roots & Factorial -->
+            <button class="calc-btn-sci" data-key="√" id="sci-btn-sqrt" type="button">√x</button>
+            <button class="calc-btn-sci" data-key="∛" type="button">∛x</button>
+            <button class="calc-btn-sci" data-key="^" type="button">xʸ</button>
+            <button class="calc-btn-sci" data-key="^2" type="button">x²</button>
+            <button class="calc-btn-sci" data-key="!" type="button">x!</button>
+
+            <!-- Row 5: Grouping & Constants -->
+            <button class="calc-btn-sci" data-key="(" type="button">(</button>
+            <button class="calc-btn-sci" data-key=")" type="button">)</button>
+            <button class="calc-btn-sci" data-key="π" type="button">π</button>
+            <button class="calc-btn-sci" data-key="e" type="button">e</button>
+            <button class="calc-btn-sci" data-key="Rand" type="button">Rand</button>
+          </div>
+
+          <!-- 2. Unit Converter Panel (Length, Area, Volume, etc.) -->
+          <div id="calc-convert-panel" class="calc-convert-panel hidden">
+            <div style="font-size:12px;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;">Unit Conversion</div>
+            <select id="convert-category" class="convert-category-select"></select>
+            <div class="convert-row">
+              <div class="convert-block">
+                <label style="font-size:11px;font-weight:600;color:var(--text-secondary);">From</label>
+                <input type="number" id="convert-from-val" class="convert-input" placeholder="0" step="any">
+                <select id="convert-from-unit" class="convert-select"></select>
+              </div>
+              <button id="convert-swap-btn" class="convert-swap-btn" type="button" title="Swap Units">⇄</button>
+              <div class="convert-block">
+                <label style="font-size:11px;font-weight:600;color:var(--text-secondary);">To</label>
+                <input type="number" id="convert-to-val" class="convert-input" placeholder="0" step="any">
+                <select id="convert-to-unit" class="convert-select"></select>
+              </div>
+            </div>
+            <div class="convert-actions">
+              <button id="convert-to-calc-btn" class="secondary-btn" type="button">Insert Result into Calculator</button>
+            </div>
+          </div>
+
+          <!-- 3. Geometry / Shapes Panel (Area, Perimeter & Volume) -->
+          <div id="calc-geom-panel" class="calc-geom-panel hidden">
+            <div style="font-size:12px;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;">Geometry & Measurements</div>
+            <select id="geom-shape-select" class="geom-shape-select"></select>
+            <div id="geom-inputs-container" class="geom-inputs-grid"></div>
+            <div id="geom-results-card" class="geom-results-card"></div>
+            <div style="display:flex;justify-content:flex-end;">
+              <button id="geom-to-calc-btn" class="secondary-btn" style="padding:6px 12px;font-size:12px;width:100%;" type="button">Insert Result into Calculator</button>
+            </div>
+          </div>
+
+          <!-- 4. Programmer Panel (Bit Board + Hex + Bitwise Ops) -->
+          <div id="calc-prog-panel" class="calc-prog-panel hidden">
+            <div class="calc-prog-board" id="calc-prog-board">
+              <div class="calc-prog-controls">
+                <span style="font-size:11px;font-weight:700;color:var(--text-tertiary);">WORD:</span>
+                <div style="display:flex;gap:4px;">
+                  <button class="calc-bit-toggle" data-bits="8" type="button">8b</button>
+                  <button class="calc-bit-toggle" data-bits="16" type="button">16b</button>
+                  <button class="calc-bit-toggle active" data-bits="32" type="button">32b</button>
+                  <button class="calc-bit-toggle" data-bits="64" type="button">64b</button>
+                </div>
+              </div>
+              <div class="calc-prog-row"><span class="calc-prog-label">HEX</span><span id="prog-val-hex" class="calc-prog-val">0x0</span></div>
+              <div class="calc-prog-row"><span class="calc-prog-label">DEC</span><span id="prog-val-dec" class="calc-prog-val">0</span></div>
+              <div class="calc-prog-row"><span class="calc-prog-label">OCT</span><span id="prog-val-oct" class="calc-prog-val">0o0</span></div>
+              <div class="calc-prog-row"><span class="calc-prog-label">BIN</span><span id="prog-val-bin" class="calc-prog-val">0000 0000</span></div>
+            </div>
+            <!-- Programmer Hex & Bitwise Keys -->
+            <div id="calc-prog-keys">
+              <div class="calc-prog-hex-grid">
+                <button class="calc-btn-sci" data-key="A" type="button">A</button>
+                <button class="calc-btn-sci" data-key="B" type="button">B</button>
+                <button class="calc-btn-sci" data-key="C" type="button">C</button>
+                <button class="calc-btn-sci" data-key="D" type="button">D</button>
+                <button class="calc-btn-sci" data-key="E" type="button">E</button>
+                <button class="calc-btn-sci" data-key="F" type="button">F</button>
+              </div>
+              <div class="calc-prog-ops-grid">
+                <button class="calc-btn-sci" data-prog-op="AND" type="button">AND</button>
+                <button class="calc-btn-sci" data-prog-op="OR" type="button">OR</button>
+                <button class="calc-btn-sci" data-prog-op="XOR" type="button">XOR</button>
+                <button class="calc-btn-sci" data-prog-op="NOT" type="button">NOT</button>
+                <button class="calc-btn-sci" data-prog-op="LSH" type="button">&lt;&lt;</button>
+                <button class="calc-btn-sci" data-prog-op="RSH" type="button">&gt;&gt;</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Wing: Numeric Keypad -->
+        <div class="calc-right-wing" id="calc-right-wing">
+          <div class="calc-grid" id="calc-pad" aria-label="Numeric Keypad">
+            <!-- Row 1 -->
+            <button class="calc-btn calc-btn-fn" data-key="AC" type="button">AC</button>
+            <button class="calc-btn calc-btn-fn" data-key="±" type="button">±</button>
+            <button class="calc-btn calc-btn-fn" data-key="%" type="button">%</button>
+            <button class="calc-btn calc-btn-op" data-key="÷" type="button">÷</button>
+
+            <!-- Row 2 -->
+            <button class="calc-btn calc-btn-num" data-key="7" type="button">7</button>
+            <button class="calc-btn calc-btn-num" data-key="8" type="button">8</button>
+            <button class="calc-btn calc-btn-num" data-key="9" type="button">9</button>
+            <button class="calc-btn calc-btn-op" data-key="×" type="button">×</button>
+
+            <!-- Row 3 -->
+            <button class="calc-btn calc-btn-num" data-key="4" type="button">4</button>
+            <button class="calc-btn calc-btn-num" data-key="5" type="button">5</button>
+            <button class="calc-btn calc-btn-num" data-key="6" type="button">6</button>
+            <button class="calc-btn calc-btn-op" data-key="−" type="button">−</button>
+
+            <!-- Row 4 -->
+            <button class="calc-btn calc-btn-num" data-key="1" type="button">1</button>
+            <button class="calc-btn calc-btn-num" data-key="2" type="button">2</button>
+            <button class="calc-btn calc-btn-num" data-key="3" type="button">3</button>
+            <button class="calc-btn calc-btn-op" data-key="+" type="button">+</button>
+
+            <!-- Row 5 -->
+            <button class="calc-btn calc-btn-fn" data-key="⌫" type="button">⌫</button>
+            <button class="calc-btn calc-btn-num" data-key="0" type="button">0</button>
+            <button class="calc-btn calc-btn-num" data-key="." type="button">.</button>
+            <button class="calc-btn calc-btn-op" data-key="=" type="button">=</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Setup View -->
+    <section id="setup-view" class="setup-container hidden" aria-label="Passcode Setup">
+      <div class="setup-header">
+        <div class="setup-logo-wrap">
+          <img src="assets/logo.svg" alt="Calculator Vault" class="app-logo-img">
+        </div>
+        <h2>Private Vault Setup</h2>
+        <p class="setup-desc">
+          Set a secret numeric passcode. When you open the calculator, enter your passcode and press <strong style="color:var(--accent-orange);">=</strong> to unlock your encrypted vault.
+        </p>
+      </div>
+
+      <div class="setup-inputs">
+        <div class="input-group">
+          <input id="setup-pin1" type="password" inputmode="numeric" maxlength="12" placeholder="Passcode (6–12 digits)" autocomplete="new-password">
+          <button type="button" class="input-toggle-btn" id="setup-toggle1" title="Show/Hide">👁️</button>
+        </div>
+
+        <div class="strength-meter-container">
+          <div class="strength-bar-bg">
+            <div id="setup-strength-bar" class="strength-bar-fill"></div>
+          </div>
+          <div class="strength-status-text">
+            <span id="setup-strength-text">Enter 6 to 12 digits</span>
+            <span>8+ recommended</span>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <input id="setup-pin2" type="password" inputmode="numeric" maxlength="12" placeholder="Confirm passcode" autocomplete="new-password">
+          <button type="button" class="input-toggle-btn" id="setup-toggle2" title="Show/Hide">👁️</button>
+        </div>
+      </div>
+
+      <div class="security-note">
+        <span>🛡️</span>
+        <span>
+          <strong>Zero-Knowledge Security:</strong> All files are encrypted in your browser using AES-256-GCM. Because there is no central server recovery, if you forget this passcode, your files cannot be recovered.
+        </span>
+      </div>
+
+      <div id="setup-msg" style="font-size:13px;font-weight:500;min-height:18px;text-align:center;"></div>
+
+      <button id="setup-submit-btn" class="primary-btn" type="button">Create Secure Vault</button>
+    </section>
+
+    <!-- Vault View -->
+    <section id="vault-view" class="vault-container hidden" aria-label="Encrypted Vault">
+      <!-- Vault Header -->
+      <div class="vault-header">
+        <div class="vault-title-wrap">
+          <img src="assets/logo.svg" alt="Calculator Vault" class="vault-header-logo">
+          <h2>Secret Vault</h2>
+          <span class="vault-badge">🔒 Encrypted</span>
+          <span id="vault-storage-badge" style="font-size:12px;color:var(--text-tertiary);">0 files</span>
+        </div>
+        <div class="vault-actions-wrap">
+          <button id="vault-panic-btn" class="panic-btn" type="button" title="Instantly disguise as calculator">⚡ Quick Hide</button>
+          <button id="vault-settings-btn" class="vault-icon-btn" type="button" title="Vault Settings">⚙️</button>
+          <button id="vault-lock-btn" class="danger-btn" type="button" title="Lock Vault">🔒 Lock</button>
+        </div>
+      </div>
+
+      <!-- Hidden File Picker Input -->
+      <input type="file" id="vault-file-input" multiple style="display:none;">
+
+      <!-- Drag & Drop Zone -->
+      <div id="vault-dropzone" class="dropzone" role="button" tabindex="0" title="Click or drop files here">
+        <div class="dropzone-icon">📥</div>
+        <div class="dropzone-text">Drop files here, or click to browse</div>
+        <div class="dropzone-subtext">Supports Photos, Videos, Documents, PDFs & Audio (Encrypted with AES-256)</div>
+      </div>
+
+      <!-- Category Filter Tabs -->
+      <div id="vault-category-tabs" class="category-tabs" role="tablist"></div>
+
+      <!-- Controls: Search, Sort, View Switcher -->
+      <div class="vault-controls-bar">
+        <div class="search-box-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="search" id="vault-search-input" placeholder="Search protected files...">
+        </div>
+
+        <select id="vault-sort-select" class="vault-select-control">
+          <option value="date-desc">Newest First</option>
+          <option value="date-asc">Oldest First</option>
+          <option value="name-asc">Name (A–Z)</option>
+          <option value="name-desc">Name (Z–A)</option>
+          <option value="size-desc">Size (Largest)</option>
+          <option value="size-asc">Size (Smallest)</option>
+        </select>
+
+        <div style="display:flex;gap:4px;">
+          <button id="vault-view-grid-btn" class="vault-icon-btn active" type="button" title="Grid View">⊞</button>
+          <button id="vault-view-list-btn" class="vault-icon-btn" type="button" title="List View">☰</button>
+        </div>
+      </div>
+
+      <!-- Batch Actions Bar (Shown when items are selected) -->
+      <div id="vault-batch-bar" class="batch-bar hidden">
+        <span id="vault-batch-count">0 selected</span>
+        <div class="batch-actions">
+          <button id="vault-batch-export" class="secondary-btn" style="padding:4px 10px;font-size:12px;" type="button">Export Selected</button>
+          <button id="vault-batch-delete" class="danger-btn" style="padding:4px 10px;font-size:12px;" type="button">Delete Selected</button>
+          <button id="vault-batch-cancel" class="secondary-btn" style="padding:4px 10px;font-size:12px;" type="button">Cancel</button>
+        </div>
+      </div>
+
+      <!-- File Gallery Views -->
+      <div id="vault-file-grid" class="file-grid" aria-live="polite"></div>
+      <div id="vault-file-list" class="file-list hidden" aria-live="polite"></div>
+    </section>
+
+    <!-- Floating Toast Notification Container -->
+    <div id="toast-container" aria-live="assertive"></div>
+  </main>
+
+  <!-- Application Bootstrap (ES Module) -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
