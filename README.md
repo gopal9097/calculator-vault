@@ -36,7 +36,8 @@
 13. [Known Limitations](#known-limitations)
 14. [How This Project Was Built](#how-this-project-was-built)
 15. [Roadmap](#roadmap)
-16. [License](#license)
+16. [Contribution](#contribution)
+17. [License](#license)
 
 ---
 
@@ -299,6 +300,22 @@ I am saying this openly because AI tools are part of how I learn and build, and 
 - Stronger key derivation (for example Argon2 through WebAssembly)
 - Encrypt the settings record
 - Automated tests for the crypto and calculator engines
+
+---
+
+## Contribution
+
+Calculator Vault was built as a team project. The repository is at <https://github.com/gopal9097/calculator-vault>.
+
+| Contributor | Role | Responsibilities |
+| :--- | :--- | :--- |
+| **Gopal Kumar Singh** ([@gopal9097](https://github.com/gopal9097)) | Main Architect | Idea, feature set and overall project direction. Core application logic: app lifecycle (`app.js`), setup, unlock and lock flow, the cryptographic design (PBKDF2, envelope encryption, AES-GCM), IndexedDB storage layer, calculation engine and parser, and the vault logic. Final review and integration of all work. |
+| **Nitish Kumar** | Developer | Calculator UI: keypad handling, display, history tape and Basic/Scientific mode switching (`calculator-ui.js`). |
+| **Ankul Kumar** | Developer | Unit Converter and Geometry modes: unit categories, conversion math and shape formulas (`converter-engine.js`, `geometry-engine.js`). |
+| **Anand Pandit** | Developer | Styling and design: themes (light, dark, auto), design tokens, responsive layout, logo and favicon (`css/`, `theme-manager.js`, `assets/`). |
+| **Ankit Kumar Mishra** | Developer and Tester | Vault interface and testing: gallery, categories, previews, dropzone (`vault-ui.js`), key-click sounds (`sound-effects.js`), documentation, and testing across browsers. |
+
+Contributions are welcome. Open an issue to report a bug or suggest an improvement, or submit a pull request.
 
 ---
 
